@@ -1,26 +1,66 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Story sets data-nav on <html> so the header can change colour per scene */
+@custom-variant nav-dark (&:where([data-nav="dark"] *));
+@custom-variant nav-solid (&:where([data-nav="solid"] *));
+@custom-variant navshow (&:where([data-items="on"] *));
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@theme {
+  --color-cream: #f4ece0;
+  --color-cream-2: #ebdfcd;
+  --color-paper: #fbf6ee;
+  --color-ink: #1f1611;
+  --color-muted: #6d5a4b;
+  --color-caramel: #c46a2a;
+  --color-coffee: #4a2a1a;
+  --color-tan: #c9a27c;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --animate-spin-slow: spin 16s linear infinite;
+  --animate-spin-mid: spin 6s linear infinite;
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-wheel: wheel 1.6s infinite;
+
+  @keyframes marquee {
+    to { transform: translateX(-50%); }
+  }
+  @keyframes wheel {
+    0% { opacity: 1; transform: translate(-50%, 0); }
+    100% { opacity: 0; transform: translate(-50%, 10px); }
   }
 }
 
+@theme inline {
+  --font-display: var(--font-gloock), Georgia, serif;
+  --font-italic: var(--font-playfair), Georgia, serif;
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+}
+
+/* nav link with an underline that grows on hover */
+@utility link {
+  position: relative;
+  padding: 4px 0;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1.5px;
+    width: 0;
+    background: currentColor;
+    transition: width .3s;
+  }
+  &:hover::after { width: 100%; }
+}
+
+html.lenis, html.lenis body { height: auto; }
+.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  overflow-x: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee, .animate-spin-slow, .animate-spin-mid { animation: none; }
 }
