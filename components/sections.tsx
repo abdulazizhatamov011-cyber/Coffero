@@ -356,7 +356,7 @@ export function Footer() {
 
           <div data-reveal="0.24">
             <small className={col}>{t("footer.contact")}</small>
-            <a href="tel:+998900000000" className={link}>+998 90 000 00 00</a>
+            <a href="tel:+998500200684" className={link}>+998 50 020 06 84</a>
             <a href="mailto:hello@coffero.uz" className={link}>hello@coffero.uz</a>
             <Link href="/contact" className={link}>{t("footer.write")}</Link>
           </div>

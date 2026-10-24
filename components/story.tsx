@@ -70,8 +70,9 @@ export default function Story() {
         gsap.fromTo(".arch-wrap", { yPercent: 25, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 1.4, ease: "power4.out" });
         gsap.fromTo(".seal-wrap", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.9 });
 
-        gsap.set(".mix-ch", { yPercent: 110 });
-        gsap.set(".mix-step", { opacity: 0, y: 40 });
+        gsap.set(".mix-line", { yPercent: 110 });
+        gsap.set(".mix-step", { opacity: 0, x: 40 });
+        gsap.set(".mix-panel", { opacity: 0, y: 30 });
         gsap.set(".t-label", { opacity: 0, scale: 0.6, y: 14 });
         gsap.set(".s4", { yPercent: 100 });
 
@@ -104,13 +105,14 @@ export default function Story() {
           .to(".ai2", { opacity: 1, duration: 0.3 }, 0.5)
           .fromTo(".ai2", { scale: 1.2 }, { scale: 1, duration: 1.2 }, 0.5)
           .to(".shade", { opacity: 1, duration: 0.3 }, 0.55)
-          .fromTo(".mix-ch", { yPercent: 110 }, { yPercent: 0, duration: 0.25, stagger: 0.03, ease: "power3.out" }, 0.5)
-          .to(".mix-fade", { opacity: 1, duration: 0.2 }, 0.7)
-          .to(".mix-step", { opacity: 1, y: 0, duration: 0.2, stagger: 0.05, ease: "power3.out" }, 0.72)
+          .to(".mix-line", { yPercent: 0, duration: 0.25, stagger: 0.08, ease: "power3.out" }, 0.5)
+          .to(".mix-fade", { opacity: 1, duration: 0.2 }, 0.68)
+          .to(".mix-panel", { opacity: 1, y: 0, duration: 0.22, ease: "power3.out" }, 0.62)
+          .to(".mix-step", { opacity: 1, x: 0, duration: 0.18, stagger: 0.05, ease: "power3.out" }, 0.7)
           // 1 → 2 : circle reveal of the splash
-          .fromTo(".mix-ch", { yPercent: 0 }, { yPercent: -110, duration: 0.3, stagger: 0.03, ease: "power2.in", immediateRender: false }, 1.4)
+          .to(".mix-line", { yPercent: -110, duration: 0.3, stagger: 0.05, ease: "power2.in" }, 1.4)
           .to(".mix-fade", { opacity: 0, duration: 0.2 }, 1.4)
-          .to(".mix-step", { opacity: 0, y: -24, duration: 0.2, stagger: 0.03 }, 1.4)
+          .to(".mix-panel", { opacity: 0, y: -30, duration: 0.2 }, 1.4)
           .fromTo(".s3", { clipPath: "circle(0% at 50% 55%)" }, { clipPath: "circle(80% at 50% 55%)", duration: 0.55, ease: "power2.inOut" }, 1.45)
           .fromTo(".splash", { rotate: -25, scale: 0.6 }, { rotate: 8, scale: 1.05, duration: 1.5 }, 1.45)
           .fromTo(".sun", { rotate: 0, scale: 0.7 }, { rotate: 140, scale: 1, duration: 1.5 }, 1.45)
@@ -249,35 +251,57 @@ export default function Story() {
 
         {/* ---------- Scene 2: mix it up ---------- */}
         <div className="pointer-events-none absolute inset-0 z-3 text-cream">
-          <div className="absolute inset-x-0 top-[17vh] text-center lg:top-[15vh]">
-            <div className="mix-fade text-xs font-bold uppercase tracking-[.2em] opacity-0">{t("s2.eyebrow")}</div>
-            <h2 className="mt-2 flex justify-center overflow-hidden pt-[.05em] font-display text-[clamp(48px,min(15vw,26vh),260px)] uppercase leading-[.95]">
-              {[..."MIX IT UP"].map((c, i) =>
-                c === " " ? <span key={i} className="w-[.25em]" /> : <span key={i} className="mix-ch inline-block">{c}</span>
-              )}
+          {/* soft dark fade on the left so the big type always reads on the photo */}
+          <div className="mix-fade absolute inset-0 bg-[linear-gradient(90deg,rgba(18,10,6,.55)_0%,rgba(18,10,6,.15)_55%,transparent_100%)] opacity-0" />
+
+          <div className="absolute inset-x-[6vw] top-[14vh] lg:bottom-[9vh] lg:right-auto lg:top-auto lg:max-w-[52vw]">
+            <span className="mix-fade inline-flex items-center gap-2 rounded-full border border-cream/30 bg-white/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[.2em] opacity-0 backdrop-blur-md">
+              <i className="size-2 rounded-full bg-[#f0b073]" />
+              {t("s2.eyebrow")}
+            </span>
+            <h2 className="mt-5 font-display text-[clamp(56px,min(13vw,22vh),220px)] uppercase leading-[.86]">
+              <span className="block overflow-hidden pb-[.04em]"><span className="mix-line block">Mix it</span></span>
+              <span className="block overflow-hidden pb-[.04em]">
+                <span className="mix-line block">
+                  up<em className="font-italic not-italic text-[#f0b073]">.</em>
+                </span>
+              </span>
             </h2>
-            <p className="mix-fade mx-auto mt-4 max-w-[440px] px-4 leading-relaxed opacity-0">
-              {t("s2.text")}
-            </p>
-            <Link
-              href="/menu"
-              className="mix-fade pointer-events-auto mt-6 inline-flex items-center gap-2.5 rounded-full border-[1.5px] border-cream/70 px-6 py-3 text-[13px] font-bold tracking-wider opacity-0 backdrop-blur-sm transition-colors hover:bg-cream hover:text-ink"
-            >
-              {t("s2.cta")}
-            </Link>
+            <div className="mt-6 flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-8">
+              <p className="mix-fade max-w-[360px] leading-relaxed text-cream/90 opacity-0">{t("s2.text")}</p>
+              <Link
+                href="/menu"
+                className="mix-fade pointer-events-auto inline-flex w-max shrink-0 items-center gap-2.5 rounded-full bg-cream px-7 py-3.5 text-[13px] font-bold tracking-wider text-ink opacity-0 shadow-[0_14px_30px_-12px_rgba(0,0,0,.6)] transition hover:-translate-y-0.5 hover:bg-white"
+              >
+                {t("s2.cta")}
+              </Link>
+            </div>
           </div>
 
-          {/* how a swirl is made */}
-          <div className="absolute inset-x-[5vw] bottom-[6vh] grid grid-cols-3 gap-2 sm:gap-4">
-            {STEPS.map((s, i) => (
-              <div key={s.n} className="mix-step min-w-0 rounded-2xl border border-cream/25 bg-white/10 p-3 backdrop-blur-md sm:rounded-3xl sm:p-5">
-                <div className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-2">
-                  <span className="text-[11px] font-bold tracking-[.16em] text-[#f0b073]">{s.n}</span>
-                  <b className="truncate font-display text-base font-normal uppercase sm:text-2xl">{t(`step.${i}.title`)}</b>
-                </div>
-                <p className="mt-1.5 hidden text-sm leading-snug text-cream/80 sm:block">{t(`step.${i}.text`)}</p>
-              </div>
-            ))}
+          {/* the recipe: a frosted panel on the right (a compact strip on phones) */}
+          <div className="absolute inset-x-[6vw] bottom-[5vh] lg:inset-x-auto lg:bottom-auto lg:right-[5vw] lg:top-1/2 lg:w-[380px] lg:-translate-y-1/2">
+          <div className="mix-panel rounded-[26px] border border-cream/20 bg-[rgba(30,18,12,.35)] p-4 backdrop-blur-xl sm:p-5 lg:p-7">
+            <div className="hidden items-center justify-between lg:flex">
+              <span className="text-[11px] font-bold uppercase tracking-[.2em] text-cream/70">{t("s2.recipe")}</span>
+              <span className="font-display text-sm text-[#f0b073]">01 — 03</span>
+            </div>
+            <ol className="grid grid-cols-3 gap-3 lg:mt-5 lg:grid-cols-1 lg:gap-0">
+              {STEPS.map((s, i) => (
+                <li key={s.n} className="mix-step flex min-w-0 flex-col gap-1.5 lg:flex-row lg:gap-4 lg:border-t lg:border-cream/15 lg:py-4 lg:first:border-t-0 lg:first:pt-0">
+                  <span className="grid size-8 shrink-0 place-items-center rounded-full bg-[#f0b073] text-[11px] font-bold text-ink lg:size-10 lg:text-xs">{s.n}</span>
+                  <span className="min-w-0">
+                    <b className="block truncate font-display text-base font-normal uppercase lg:text-2xl">{t(`step.${i}.title`)}</b>
+                    <span className="mt-1 hidden text-sm leading-snug text-cream/75 lg:block">{t(`step.${i}.text`)}</span>
+                  </span>
+                </li>
+              ))}
+            </ol>
+            <div className="mt-5 hidden flex-wrap gap-2 lg:flex">
+              {["s2.chip1", "s2.chip2", "s2.chip3"].map((k) => (
+                <span key={k} className="rounded-full border border-cream/25 px-3 py-1.5 text-[11px] font-semibold text-cream/85">{t(k)}</span>
+              ))}
+            </div>
+          </div>
           </div>
         </div>
 
