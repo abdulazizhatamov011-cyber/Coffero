@@ -12,6 +12,8 @@ export type Lang = (typeof LANGS)[number]["code"];
 type Dict = Record<string, string>;
 
 const en: Dict = {
+  "auth.backToSite": "← Back to the site",
+  "auth.showPassword": "Show password", "auth.hidePassword": "Hide password",
   "s2.recipe": "The recipe", "s2.chip1": "18h cold brew", "s2.chip2": "Real caramel", "s2.chip3": "Oat milk option",
   "nav.profile": "Profile", "auth.err.current": "Current password is wrong.",
   "profile.title": "My profile", "profile.notSigned": "Sign in to see your profile.", "profile.viaGoogle": "Signed in with Google",
@@ -88,6 +90,8 @@ const en: Dict = {
 };
 
 const uz: Dict = {
+  "auth.backToSite": "← Saytga qaytish",
+  "auth.showPassword": "Parolni ko'rsatish", "auth.hidePassword": "Parolni yashirish",
   "s2.recipe": "Retsept", "s2.chip1": "18 soatlik cold brew", "s2.chip2": "Haqiqiy karamel", "s2.chip3": "Suli suti bilan",
   "nav.profile": "Profil", "auth.err.current": "Joriy parol noto'g'ri.",
   "profile.title": "Mening profilim", "profile.notSigned": "Profilni ko'rish uchun hisobga kiring.", "profile.viaGoogle": "Google orqali kirgan",
@@ -164,6 +168,8 @@ const uz: Dict = {
 };
 
 const ru: Dict = {
+  "auth.backToSite": "← Вернуться на сайт",
+  "auth.showPassword": "Показать пароль", "auth.hidePassword": "Скрыть пароль",
   "s2.recipe": "Рецепт", "s2.chip1": "Cold brew 18 ч", "s2.chip2": "Настоящая карамель", "s2.chip3": "Овсяное молоко",
   "nav.profile": "Профиль", "auth.err.current": "Текущий пароль неверен.",
   "profile.title": "Мой профиль", "profile.notSigned": "Войдите, чтобы увидеть профиль.", "profile.viaGoogle": "Вход через Google",

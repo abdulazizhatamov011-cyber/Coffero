@@ -118,7 +118,7 @@ export default function Nav() {
         <div className="text-sm text-cream/60">
           <div className="mb-6"><LangPills /></div>
           <p>{t("visit.street")}, {t("visit.city")}</p>
-          <p className="mt-1">+998 90 000 00 00 · hello@coffero.uz</p>
+          <p className="mt-1">+998 50 020 06 84 · hello@coffero.uz</p>
         </div>
       </div>
     </>

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { FLAVORS, PHOTOS, img } from "@/lib/data";
@@ -31,11 +32,33 @@ const Icon = {
   user: <><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></>,
 };
 
-function Field({ icon, ...props }: { icon: keyof typeof Icon } & React.InputHTMLAttributes<HTMLInputElement>) {
+function Field({ icon, type, ...props }: { icon: keyof typeof Icon } & React.InputHTMLAttributes<HTMLInputElement>) {
+  const t = useT();
+  const [visible, setVisible] = useState(false);
+  const isPassword = type === "password";
   return (
     <label className="flex items-center gap-3 border-b-2 border-[#4a2c1c] pb-2 transition-colors focus-within:border-cream">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b2416" strokeWidth="2" strokeLinejoin="round" className="shrink-0">{Icon[icon]}</svg>
-      <input {...props} className="min-w-0 flex-1 bg-transparent py-1 text-[15px] text-[#2b170c] outline-none placeholder:text-[#3b2416]/75" />
+      <input
+        {...props}
+        type={isPassword && visible ? "text" : type}
+        className="no-autofill-bg min-w-0 flex-1 bg-transparent py-1 text-[15px] text-[#2b170c] outline-none placeholder:text-[#3b2416]/75"
+      />
+      {isPassword && (
+        <button
+          type="button"
+          onClick={() => setVisible((v) => !v)}
+          aria-label={t(visible ? "auth.hidePassword" : "auth.showPassword")}
+          aria-pressed={visible}
+          className="grid size-8 shrink-0 place-items-center rounded-full text-[#3b2416] transition-colors hover:bg-black/10"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" />
+            <circle cx="12" cy="12" r="3" />
+            {visible && <path d="M4 4l16 16" />}
+          </svg>
+        </button>
+      )}
     </label>
   );
 }
@@ -121,6 +144,7 @@ export default function AuthCard() {
   );
 
   return (
+    <div className="flex w-full flex-col items-center gap-8">
     <div className="flex w-full flex-col items-center gap-8 lg:flex-row lg:items-end lg:justify-center">
       {/* welcome card (desktop) */}
       <div className="hidden w-[300px] overflow-hidden rounded-[36px] bg-white shadow-[0_40px_80px_-30px_rgba(74,42,26,.5)] lg:block">
@@ -210,6 +234,15 @@ export default function AuthCard() {
           <p className="mt-6 text-center text-xs text-cream/70">{t("auth.demoNote")}</p>
         </div>
       </div>
+    </div>
+
+    {/* leave without signing in */}
+    <Link
+      href="/"
+      className="inline-flex items-center gap-2 rounded-full border-[1.5px] border-[#5a3626] bg-white/40 px-7 py-3 text-sm font-bold text-[#4a2c1c] backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-[#5a3626] hover:text-cream"
+    >
+      {t("auth.backToSite")}
+    </Link>
     </div>
   );
 }

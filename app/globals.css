@@ -64,3 +64,17 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee, .animate-spin-slow, .animate-spin-mid { animation: none; }
 }
+
+/* Chrome/Safari paint autofilled inputs light blue and won't let the background be changed,
+   so cover it with an inset shadow in the login card's own colour. */
+.no-autofill-bg:-webkit-autofill,
+.no-autofill-bg:-webkit-autofill:hover,
+.no-autofill-bg:-webkit-autofill:focus,
+.no-autofill-bg:-webkit-autofill:active,
+.no-autofill-bg:autofill {
+  -webkit-box-shadow: 0 0 0 1000px #9b7462 inset !important;
+  box-shadow: 0 0 0 1000px #9b7462 inset !important;
+  -webkit-text-fill-color: #2b170c !important;
+  caret-color: #2b170c;
+  transition: background-color 9999999s ease-out 0s;
+}
