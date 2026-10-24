@@ -312,7 +312,7 @@ const SOCIALS = [
 
 export function Footer() {
   const col = "mb-4 block text-[11px] font-bold uppercase tracking-[.16em] text-cream/50";
-  const link = "block py-1 text-cream/85 transition-colors hover:text-[#f0b073]";
+  const link = "block py-1 text-[15px] text-cream/85 transition-colors hover:text-[#f0b073] sm:text-base";
   const t = useT();
   const pathname = usePathname();
   const toTop = () => {
@@ -325,8 +325,9 @@ export function Footer() {
   return (
     <ScrollFx>
       <footer id="footer" className="mt-12 overflow-hidden rounded-t-[36px] bg-ink px-[5vw] pb-8 pt-16 text-cream lg:mt-20 lg:rounded-t-[56px] lg:pt-24">
-        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-10">
-          <div data-reveal>
+        {/* phones: logo block full width, then the link columns two per row */}
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-10">
+          <div data-reveal className="col-span-2 lg:col-span-1">
             <Link href="/" className="font-display text-3xl">
               COFFERO<span className="text-caramel">.</span>
             </Link>
@@ -348,10 +349,10 @@ export function Footer() {
 
           <div data-reveal="0.16">
             <small className={col}>{t("footer.visit")}</small>
-            <p className="py-1 text-cream/85">{t("visit.street")}</p>
-            <p className="py-1 text-cream/85">{t("footer.country")}</p>
-            <p className="py-1 text-cream/60">{t("visit.weekdays")}</p>
-            <p className="py-1 text-cream/60">{t("visit.weekend")}</p>
+            <p className="py-1 text-[15px] text-cream/85 sm:text-base">{t("visit.street")}</p>
+            <p className="py-1 text-[15px] text-cream/85 sm:text-base">{t("footer.country")}</p>
+            <p className="py-1 text-[15px] text-cream/60 sm:text-base">{t("visit.weekdays")}</p>
+            <p className="py-1 text-[15px] text-cream/60 sm:text-base">{t("visit.weekend")}</p>
           </div>
 
           <div data-reveal="0.24">
